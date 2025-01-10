@@ -27,7 +27,7 @@ Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
   ```bash
   pip install selenium pandas openpyxl webdriver-manager
   ```
-
+  
   ## COMANDOS GIT !!
 
   nao commita antes de acabar seu dia, quando estiver faltando 10/20 min voce commit com a seguinte frase de commit
@@ -35,3 +35,8 @@ Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
   ```bash
   git commit -m "Gabriel INICIO - 1"
   ```
+  Assim que abrir o projeto sempre da "git pull"
+  ```bash
+  git pull
+    ```
+  
