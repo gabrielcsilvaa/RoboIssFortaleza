@@ -21,15 +21,17 @@ Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
   - `pandas`
   - `openpyxl`
   - `webdriver-manager`
- 
+
+  Instale as dependências com o seguinte comando:
+
+  ```bash
+  pip install selenium pandas openpyxl webdriver-manager
+  ```
+
   ## COMANDOS GIT !!
 
   nao commita antes de acabar seu dia, quando estiver faltando 10/20 min voce commit com a seguinte frase de commit
   
   ```bash
   git commit -m "Gabriel 'e oque voce fez no dia'"
-
-Instale as dependências com o seguinte comando:
-
-```bash
-pip install selenium pandas openpyxl webdriver-manager
+  ```
