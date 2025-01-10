@@ -12,4 +12,22 @@ Interação Automática com o ISS: Realiza login no sistema, navega pelas págin
 
 Geração de PDFs: Completa o processo de escrituração e baixa os PDFs gerados para uma pasta local.
 
-Registro de Logs: Mantém um registro detalhado das atividades realizadas pelo robô, incluindo erros e sucessos.
+## Pré-requisitos
+
+Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
+
+- **Python 3.8 ou superior**
+- **Google Chrome** instalado e atualizado
+- **Bibliotecas Python**:
+  - `selenium`
+  - `pandas`
+  - `openpyxl`
+  - `webdriver-manager`
+
+Instale as dependências com o seguinte comando:
+
+```bash
+pip install selenium pandas openpyxl webdriver-manager
+
+
+## Comandos git !!
