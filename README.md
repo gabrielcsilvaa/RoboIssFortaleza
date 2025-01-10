@@ -29,5 +29,3 @@ Instale as dependências com o seguinte comando:
 ```bash
 pip install selenium pandas openpyxl webdriver-manager
 
-
-## Comandos git !!
