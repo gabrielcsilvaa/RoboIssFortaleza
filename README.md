@@ -6,10 +6,37 @@ Este é um projeto de automação desenvolvido em Python para realizar a escritu
 
 Funcionalidades
 
-Leitura de Dados da Planilha: Extrai informações como nome, valores, datas e outras especificações da planilha fornecida.
+- **Leitura de Dados da Planilha**: Extrai informações como nome, valores, datas e outras especificações da planilha fornecida.
+- **Interação Automática com o ISS**: Realiza login no sistema, navega pelas páginas necessárias e preenche os campos automaticamente.
+- **Geração de PDFs**: Completa o processo de escrituração e baixa os PDFs gerados para uma pasta local.
 
-Interação Automática com o ISS: Realiza login no sistema, navega pelas páginas necessárias e preenche os campos automaticamente.
+## Pré-requisitos
 
-Geração de PDFs: Completa o processo de escrituração e baixa os PDFs gerados para uma pasta local.
+Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
 
-Registro de Logs: Mantém um registro detalhado das atividades realizadas pelo robô, incluindo erros e sucessos.
+- **Python 3.8 ou superior**
+- **Google Chrome** instalado e atualizado
+- **Bibliotecas Python**:
+  - `selenium`
+  - `pandas`
+  - `openpyxl`
+  - `webdriver-manager`
+
+  Instale as dependências com o seguinte comando:
+
+  ```bash
+  pip install selenium pandas openpyxl webdriver-manager
+  ```
+  
+  ## COMANDOS GIT !!
+
+  nao commita antes de acabar seu dia, quando estiver faltando 10/20 min voce commit com a seguinte frase de commit
+  
+  ```bash
+  git commit -m "Gabriel INICIO - 1"
+  ```
+  Assim que abrir o projeto sempre da "git pull"
+  ```bash
+  git pull
+    ```
+  
