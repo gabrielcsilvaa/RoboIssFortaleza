@@ -35,8 +35,17 @@ Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
   ```bash
   git commit -m "Gabriel INICIO - 1"
   ```
+  Sempre quando começarmos uma nova parte do projeto ou algo que algum esteja fazendo solo criar sua propria branch nesse modelo
+  ```bash
+  git branch Gabriel1-escrituraçao
+  ```
+  Mudar para branch caso queira trocar
+  ```bash
+  git checkout nome-da-branch
+  ```  
   Assim que abrir o projeto sempre da "git pull"
   ```bash
   git pull
-    ```
+  ```
+  
   
