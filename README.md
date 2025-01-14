@@ -30,7 +30,7 @@ Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
   
   ## COMANDOS GIT !!
 
-  nao commita antes de acabar seu dia, quando estiver faltando 10/20 min voce commit com a seguinte frase de commit
+  nao commita antes de acabar seu dia, sempre q fizer algo commita !
   
   ```bash
   git commit -m "Gabriel INICIO - 1"
