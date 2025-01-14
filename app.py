@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd  
 import time
 
@@ -42,20 +43,28 @@ def acessar_site(url):
         print("Login realizado com sucesso!")
         time.sleep(5)
         clicar_Cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:tipoPesquisa"]/tbody/tr/td[2]/label')
-        clicar_Cnpj.click
+        actions = ActionChains(driver)
+        actions.move_to_element(clicar_Cnpj).click().perform()
         print("cliquei no cnpj")
-        time.sleep(10000)
+        time.sleep(2)
+
+        caminho_planilha = r'C:\Users\Nicolas-ti\Desktop\planilha_robo_iss.xlsx'
+        dados = pd.read_excel(caminho_planilha)
+        print(f"Dados carregados:\n{dados}")
+
+        for index, row in dados.iterrows():
+            cnpj=row['CNPJ']
+            print(f"Processando CNPJ: {cnpj}")
+
+            campo_cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:cpfPesquisa"]')
+            campo_cnpj.clear()
+            campo_cnpj.send_keys(cnpj)
+            time.sleep(1000)
+
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
 
-def buscar_dados_excel():
-    arquivo = "planilha_robo_iss.xlsx"
-    df = pd.read_excel(arquivo)
 
-    for index, row in df.iterrows():
-        cnpj = row['CNPJ'] 
-    
 
 acessar_site("https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110")
-buscar_dados_excel()
