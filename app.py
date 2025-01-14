@@ -49,12 +49,12 @@ def acessar_site(url):
         print("cliquei no cnpj")
         time.sleep(2)
 
-        caminho_planilha = r'C:\Users\Nicolas-ti\Desktop\planilha_robo_iss.xlsx'
+        caminho_planilha = r'C:\Users\Nicolas-ti\Desktop\planilha_robo_iss.xlsx' # (teste)... tratar isso aqui para ele localizar automaticamente onde esta o arquivo xlsx
         dados = pd.read_excel(caminho_planilha)
         print(f"Dados carregados:\n{dados}")
 
         for index, row in dados.iterrows():
-            cnpj=row['CNPJ']
+            cnpj = row['CNPJ']
             print(f"Processando CNPJ: {cnpj}")
 
             campo_cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:cpfPesquisa"]')
