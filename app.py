@@ -42,6 +42,7 @@ def acessar_site(url):
         clicar_login.click()
         print("Login realizado com sucesso!")
         time.sleep(5)
+
         clicar_Cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:tipoPesquisa"]/tbody/tr/td[2]/label')
         actions = ActionChains(driver)
         actions.move_to_element(clicar_Cnpj).click().perform()
@@ -59,8 +60,25 @@ def acessar_site(url):
             campo_cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:cpfPesquisa"]')
             campo_cnpj.clear()
             campo_cnpj.send_keys(cnpj)
-            time.sleep(1000)
+            time.sleep(2)
 
+            clicar_pesquisar = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:btnPesquisar"]')
+            clicar_pesquisar.click()
+            print("cliquei em pesquisar")
+            time.sleep(5)
+
+            clicar_empresa = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:empresaDataTable:0:linkInscricao"]')
+            clicar_empresa.click()
+            print("cliquei na empresa")
+            time.sleep(4)
+
+            clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
+            clicar_escrituracao.click()
+            time.sleep(2)
+
+            clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
+            clicar_escrituracao2.click()
+            time.sleep(10000)
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
