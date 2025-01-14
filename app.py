@@ -7,6 +7,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd  
 import time
+import os 
+
+cnpj = input('Digite o CNPJ da empresa: ')
+
+nome_planilha = 'planilha_robo_iss.xlsx'
+# Obtém o caminho da área de trabalho do usuário
+desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+print(f"Caminho da área de trabalho: {desktop_path}")
 
 def configurar_driver():
     options = webdriver.ChromeOptions()
@@ -38,7 +46,7 @@ def acessar_site(url):
         inserir_senha.send_keys("Fiscal@2021")
         time.sleep(2)
 
-        clicar_login = driver.find_element(By.XPATH, '//*[@id="botao-entrar"]')  
+        clicar_login = driver.find_element(By.XPATH, '//*[@id="botao-entrar"]')
         clicar_login.click()
         print("Login realizado com sucesso!")
         time.sleep(5)
@@ -49,11 +57,11 @@ def acessar_site(url):
         print("cliquei no cnpj")
         time.sleep(2)
 
-        caminho_planilha = r'C:\Users\Nicolas-ti\Desktop\planilha_robo_iss.xlsx' # (teste)... tratar isso aqui para ele localizar automaticamente onde esta o arquivo xlsx
+        caminho_planilha = os.path.join(desktop_path, nome_planilha) # (teste)... tratar isso aqui para ele localizar automaticamente onde esta o arquivo xlsx
         dados = pd.read_excel(caminho_planilha)
         print(f"Dados carregados:\n{dados}")
 
-        for index, row in dados.iterrows():
+        for index, row in dados.iterrows(): 
             cnpj = row['CNPJ']
             print(f"Processando CNPJ: {cnpj}")
 
@@ -78,7 +86,17 @@ def acessar_site(url):
 
             clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
             clicar_escrituracao2.click()
+            time.sleep(3) 
+
+            clicar_data =  driver.find_element(By.XPATH,'//*[@id="manterEscrituracaoForm:dataInicialHeader"]/label/div' ) 
+            clicar_data.click()
+            time.sleep(3)
+            
+            clicar_mes =  driver.find_element(By.XPATH , '//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayoutM11"]')
+            clicar_mes.click()
             time.sleep(10000)
+
+
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
