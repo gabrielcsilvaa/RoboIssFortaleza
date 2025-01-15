@@ -1,0 +1,2 @@
+//*[@id="manterEscrituracaoForm:dataFinalDateEditorLayoutM0"]
+//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayoutM{mes - 1}"]
