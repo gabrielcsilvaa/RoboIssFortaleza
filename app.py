@@ -8,6 +8,19 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd  
 import time
 import os 
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+
+data_atual = datetime.now()
+
+mes_passado = data_atual - relativedelta(months=1)
+
+# Obter o mês e o ano
+mes = mes_passado.month
+ano = mes_passado.year
+
+
 
 cnpj = input('Digite o CNPJ da empresa: ')
 
@@ -60,40 +73,52 @@ def acessar_site(url):
         dados = pd.read_excel(caminho_planilha)
         print(f"Dados carregados:\n{dados}")
 
-        for index, row in dados.iterrows(): 
-            cnpj = row['CNPJ']
-            print(f"Processando CNPJ: {cnpj}")
+        
 
-            campo_cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:cpfPesquisa"]')
-            campo_cnpj.clear()
-            campo_cnpj.send_keys(cnpj)
-            time.sleep(2)
+        campo_cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:cpfPesquisa"]')
+        campo_cnpj.clear()
+        campo_cnpj.send_keys(cnpj)
+        time.sleep(2)
 
-            clicar_pesquisar = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:btnPesquisar"]')
-            clicar_pesquisar.click()
-            print("cliquei em pesquisar")
-            time.sleep(5)
+        clicar_pesquisar = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:btnPesquisar"]')
+        clicar_pesquisar.click()
+        print("cliquei em pesquisar")
+        time.sleep(5)
 
-            clicar_empresa = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:empresaDataTable:0:linkInscricao"]')
-            clicar_empresa.click()
-            print("cliquei na empresa")
-            time.sleep(4)
+        clicar_empresa = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:empresaDataTable:0:linkInscricao"]')
+        clicar_empresa.click()
+        print("cliquei na empresa")
+        time.sleep(4)
 
-            clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
-            clicar_escrituracao.click()
-            time.sleep(2)
+        clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
+        clicar_escrituracao.click()
+        time.sleep(2)
 
-            clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
-            clicar_escrituracao2.click()
-            time.sleep(3) 
+        clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
+        clicar_escrituracao2.click()
+        time.sleep(3) 
 
-            clicar_data =  driver.find_element(By.XPATH,'//*[@id="manterEscrituracaoForm:dataInicialHeader"]/label/div' ) 
-            clicar_data.click()
-            time.sleep(3)
+        clicar_data =  driver.find_element(By.XPATH,'//*[@id="manterEscrituracaoForm:dataInicialHeader"]/label/div' ) 
+        clicar_data.click()
+        time.sleep(3)
+        
+        clicar_mes =  driver.find_element(By.XPATH , f'//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayoutM{mes-1}"]')
+        clicar_mes.click()
+
+        lista_ano =  driver.find_elements(By.XPATH , '//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayout"]/tbody/tr/td/div')
+        
+        for i in lista_ano:
             
-            clicar_mes =  driver.find_element(By.XPATH , '//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayoutM11"]')
-            clicar_mes.click()
-            time.sleep(10000)
+            if i.text == str(ano):
+                i.click()
+                
+            
+
+        
+        time.sleep(10000)
+
+
+        
 
 
 
