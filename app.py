@@ -16,6 +16,7 @@ nome_planilha = 'planilha_robo_iss.xlsx'
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
 print(f"Caminho da área de trabalho: {desktop_path}")
 
+caminho_planilha = os.path.join(desktop_path, nome_planilha)
 def configurar_driver():
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")  
@@ -55,9 +56,7 @@ def acessar_site(url):
         actions = ActionChains(driver)
         actions.move_to_element(clicar_Cnpj).click().perform()
         print("cliquei no cnpj")
-        time.sleep(2)
-
-        caminho_planilha = os.path.join(desktop_path, nome_planilha) # (teste)... tratar isso aqui para ele localizar automaticamente onde esta o arquivo xlsx
+        time.sleep(2) 
         dados = pd.read_excel(caminho_planilha)
         print(f"Dados carregados:\n{dados}")
 
