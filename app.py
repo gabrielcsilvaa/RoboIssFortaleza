@@ -105,18 +105,38 @@ def acessar_site(url):
         clicar_mes.click()
         time.sleep(2)
 
-        lista_tabela = driver.find_elements(By.XPATH, '//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayout"]/tbody/tr/td/div')
-        for i in lista_tabela:
+        lista_tabela_ano = driver.find_elements(By.XPATH, '//*[@id="manterEscrituracaoForm:dataInicialDateEditorLayout"]/tbody/tr/td/div')
+        for i in lista_tabela_ano:
             if i.text == ano:
                 i.click()
-
-        print("isso aqui é um teste", lista_tabela[10].text)
         time.sleep(1)
 
         clicar_ok = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataInicialDateEditorButtonOk"]')
         clicar_ok.click()
+        time.sleep(1)
 
+        clicar_data2 = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataFinalHeader"]/label/div')
+        clicar_data2.click()
+        time.sleep(1)
 
+        clicar_mes2 = driver.find_element(By.XPATH, f'//*[@id="manterEscrituracaoForm:dataFinalDateEditorLayoutM{mes - 1}"]')
+        clicar_mes2.click()
+        time.sleep(1)
+
+        lista_tabela_ano2 = driver.find_elements(By.XPATH, '//*[@id="manterEscrituracaoForm:dataFinalDateEditorLayout"]/tbody/tr/td/div')
+        for i in lista_tabela_ano2:
+            if i.text == ano:
+                i.click()
+        time.sleep(1)
+
+        clicar_ok = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataFinalDateEditorButtonOk"]')
+        clicar_ok.click()
+        time.sleep(3)
+
+        clicar_consultar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:btnConsultar"]')
+        clicar_consultar.click()
+        time.sleep(1000)
+        
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
