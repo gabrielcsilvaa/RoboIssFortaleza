@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
@@ -135,8 +136,39 @@ def acessar_site(url):
 
         clicar_consultar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:btnConsultar"]')
         clicar_consultar.click()
-        time.sleep(1000)
+        time.sleep(2)
         
+        clicar_ok2 = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataTable:0:linkEscriturar"]/span')
+        clicar_ok2.click()
+        time.sleep(10)
+
+        clicar_servico = driver.find_element(By.XPATH,'//*[@id="aba_tomados_lbl"]')
+        clicar_servico.click()
+        time.sleep(4)
+
+        clicar_doc = driver.find_element(By.XPATH,'//*[@id="servico_tomado_form:seamj_id836"]')
+        clicar_doc.click()
+        time.sleep(2)
+
+        clicar_cnpj2 = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb:1"]')
+        print('passou por aqui ')
+        print('passou por aqui')
+        clicar_cnpj2.click()
+        time.sleep(4)
+
+        cnpj_documentos = '04740876000125'
+        preencher_cnpj = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:cpfPesquisaTomador"]')
+        preencher_cnpj.click()
+        preencher_cnpj.send_keys(cnpj_documentos)
+        time.sleep(2)
+
+        preencher_cnpj.send_keys(Keys.ENTER)
+        time.sleep(10)
+
+        click_servico = driver.find_element(By.XPATH , '//*[@id="digitarDocumentoForm:abaServico_lbl"]')
+        click_servico.click()
+        time.sleep(1000)
+
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
