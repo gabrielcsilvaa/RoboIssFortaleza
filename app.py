@@ -135,6 +135,23 @@ def acessar_site(url):
 
         clicar_consultar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:btnConsultar"]')
         clicar_consultar.click()
+        time.sleep(3)
+
+        clicar_escriturar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataTable:0:escriturar"]')
+        clicar_escriturar.click()
+        time.sleep(10)
+        
+        clicar_tomados = driver.find_element(By.XPATH, '//*[@id="aba_tomados_lbl"]')
+        clicar_tomados.click()
+        time.sleep(3)
+
+        clicar_digitardoc = driver.find_element(By.XPATH, '//*[@id="servico_tomado_form:seamj_id836"]')
+        clicar_digitardoc.click()
+        time.sleep(2)
+
+        clicar_cnpj_prestador = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb"]/tbody/tr/td[2]/label')
+        actions = ActionChains(driver)
+        actions.move_to_element(clicar_cnpj_prestador).click().perform()
         time.sleep(1000)
         
 
