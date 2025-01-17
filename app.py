@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 import pandas as pd  
 import time
@@ -25,6 +26,7 @@ def configurar_driver():
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
+
 def get_previos_month_and_year():
     today = datetime.today()
     if today.month ==  1:
@@ -38,6 +40,7 @@ def get_previos_month_and_year():
 mesANO = get_previos_month_and_year()
 mes = mesANO[0]
 ano = str(mesANO[1])
+
 
 def acessar_site(url):
     driver = configurar_driver()
@@ -82,12 +85,12 @@ def acessar_site(url):
         clicar_pesquisar = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:btnPesquisar"]')
         clicar_pesquisar.click()
         print("cliquei em pesquisar")
-        time.sleep(5)
+        time.sleep(2)
 
         clicar_empresa = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:empresaDataTable:0:linkInscricao"]')
         clicar_empresa.click()
         print("cliquei na empresa")
-        time.sleep(4)
+        time.sleep(2)
 
         clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
         clicar_escrituracao.click()
@@ -95,7 +98,7 @@ def acessar_site(url):
 
         clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
         clicar_escrituracao2.click()
-        time.sleep(3) 
+        time.sleep(2) 
 
         clicar_data =  driver.find_element(By.XPATH,'//*[@id="manterEscrituracaoForm:dataInicialHeader"]/label/div' ) 
         clicar_data.click()
@@ -131,11 +134,11 @@ def acessar_site(url):
 
         clicar_ok = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataFinalDateEditorButtonOk"]')
         clicar_ok.click()
-        time.sleep(3)
+        time.sleep(2)
 
         clicar_consultar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:btnConsultar"]')
         clicar_consultar.click()
-        time.sleep(3)
+        time.sleep(2)
 
         clicar_escriturar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataTable:0:escriturar"]')
         clicar_escriturar.click()
@@ -143,7 +146,7 @@ def acessar_site(url):
         
         clicar_tomados = driver.find_element(By.XPATH, '//*[@id="aba_tomados_lbl"]')
         clicar_tomados.click()
-        time.sleep(3)
+        time.sleep(2)
 
         clicar_digitardoc = driver.find_element(By.XPATH, '//*[@id="servico_tomado_form:seamj_id836"]')
         clicar_digitardoc.click()
@@ -152,8 +155,38 @@ def acessar_site(url):
         clicar_cnpj_prestador = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb"]/tbody/tr/td[2]/label')
         actions = ActionChains(driver)
         actions.move_to_element(clicar_cnpj_prestador).click().perform()
-        time.sleep(1000)
-        
+        time.sleep(1)
+
+        clicar_colocar_cnpj = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:cpfPesquisaTomador"]')
+        clicar_colocar_cnpj.click()
+        dados = pd.read_excel(caminho_planilha)
+        for index, row in dados.iterrows():
+            driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:cpfPesquisaTomador"]').send_keys(row['CNPJ'])
+            time.sleep(1)
+            clicar_colocar_cnpj.send_keys(Keys.ENTER)
+        time.sleep(2) 
+       
+        clicar_servico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:abaServico_lbl"]')
+        clicar_servico.click()
+        time.sleep(2)
+
+        clicar_select = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoDocumentoDigitado"]')
+        clicar_select.click()
+        time.sleep(2)
+        for i in range(1):
+            clicar_select.send_keys(Keys.ARROW_DOWN)
+            time.sleep(2)
+            clicar_select.send_keys(Keys.ENTER)
+            time.sleep(2)
+
+        clicar_numero = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]')
+        clicar_numero.click()
+        dados = pd.read_excel(caminho_planilha)
+        driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]').send_keys(row['Nº DOCUMENTO'])
+        time.sleep(1)
+
+
+
 
     except Exception as e:
         print(f"Erro ao acessar o site: {e}")
