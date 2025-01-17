@@ -159,7 +159,6 @@ def acessar_site(url):
 
         clicar_colocar_cnpj = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:cpfPesquisaTomador"]')
         clicar_colocar_cnpj.click()
-        dados = pd.read_excel(caminho_planilha)
         for index, row in dados.iterrows():
             driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:cpfPesquisaTomador"]').send_keys(row['CNPJ'])
             time.sleep(1)
@@ -181,9 +180,30 @@ def acessar_site(url):
 
         clicar_numero = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]')
         clicar_numero.click()
-        dados = pd.read_excel(caminho_planilha)
         driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]').send_keys(row['Nº DOCUMENTO'])
         time.sleep(1)
+
+        clicar_serie = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:serieDocumentoDigitado"]')
+        clicar_serie.send_keys('E')
+
+        dados['DATA DOCUMENTO'] = pd.to_datetime(dados['DATA DOCUMENTO'], errors='coerce').dt.strftime('%d/%m/%Y')
+        if dados['DATA DOCUMENTO'].isnull().any():
+            print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
+        else:
+            for index,row in dados.iterrows():
+                dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
+                dataDoc.clear()
+                dataDoc.send_keys(row['DATA DOCUMENTO'])
+                time.sleep(2)
+
+        clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
+        clicar_situacao.click()
+        time.sleep(2)
+        for i in range(1):
+            clicar_situacao.send_keys(Keys.ARROW_DOWN)
+            time.sleep(2)
+        clicar_situacao.send_keys(Keys.ENTER)
+        time.sleep(1000)
 
 
 
