@@ -220,7 +220,7 @@ def acessar_site(url):
 
         clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
         clicar_opçaoCnae.click()
-        time.sleep(1000)
+        time.sleep(10000)
 
 
 
@@ -230,4 +230,3 @@ def acessar_site(url):
 
 
 acessar_site("https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110")
-
