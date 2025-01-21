@@ -203,8 +203,24 @@ def acessar_site(url):
             clicar_situacao.send_keys(Keys.ARROW_DOWN)
             time.sleep(2)
         clicar_situacao.send_keys(Keys.ENTER)
-        time.sleep(1000)
+        time.sleep(2)
 
+        clicar_pesquisarCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idLinkPesquisarCnae"]')
+        clicar_pesquisarCnae.click()
+        time.sleep(2)
+
+        codigoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idCnaePesquisa"]')
+        codigoCnae.click()
+        driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idCnaePesquisa"]').send_keys(row['CODIGO CNAE'])
+        time.sleep(2)
+        
+        fecharCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idPesquisar"]')
+        fecharCnae.click()
+        time.sleep(2)
+
+        clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
+        clicar_opçaoCnae.click()
+        time.sleep(1000)
 
 
 
@@ -214,3 +230,4 @@ def acessar_site(url):
 
 
 acessar_site("https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110")
+
