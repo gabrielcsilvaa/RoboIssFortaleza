@@ -44,7 +44,7 @@ ano = str(mesANO[1])
 
 def acessar_site(url):
     driver = configurar_driver()
-
+    #aqio
     try:
         driver.get(url)
         print(f"Acessando o site: {url}")
@@ -69,6 +69,8 @@ def acessar_site(url):
         print("Login realizado com sucesso!")
         time.sleep(5)
 
+        #login
+        #inscriçao
         clicar_Cnpj = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:tipoPesquisa"]/tbody/tr/td[2]/label')
         actions = ActionChains(driver)
         actions.move_to_element(clicar_Cnpj).click().perform()
@@ -91,7 +93,9 @@ def acessar_site(url):
         clicar_empresa.click()
         print("cliquei na empresa")
         time.sleep(2)
+        #inscriçao 
 
+        #colocar a data da escrituraçao
         clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
         clicar_escrituracao.click()
         time.sleep(2)
@@ -143,7 +147,9 @@ def acessar_site(url):
         clicar_escriturar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataTable:0:escriturar"]')
         clicar_escriturar.click()
         time.sleep(10)
-        
+        #colocar a data da escrituraçao
+
+        #indo para colocar dado para escriturar
         clicar_tomados = driver.find_element(By.XPATH, '//*[@id="aba_tomados_lbl"]')
         clicar_tomados.click()
         time.sleep(2)
@@ -151,7 +157,9 @@ def acessar_site(url):
         clicar_digitardoc = driver.find_element(By.XPATH, '//*[@id="servico_tomado_form:seamj_id836"]')
         clicar_digitardoc.click()
         time.sleep(2)
+        #indo para colocar dado para escriturar
 
+        #escriturando
         clicar_cnpj_prestador = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb"]/tbody/tr/td[2]/label')
         actions = ActionChains(driver)
         actions.move_to_element(clicar_cnpj_prestador).click().perform()
@@ -216,7 +224,7 @@ def acessar_site(url):
         
         fecharCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idPesquisar"]')
         fecharCnae.click()
-        time.sleep(2)
+        time.sleep(1000)
 
         clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
         clicar_opçaoCnae.click()
