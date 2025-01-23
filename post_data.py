@@ -85,7 +85,7 @@ def escriturando1(driver):
     time.sleep(2)
 
 
-def finishInscricao(driver, dados ):
+def finishInscricao(driver, dados):
     clicar_cnpj_prestador = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb"]/tbody/tr/td[2]/label')
     actions = ActionChains(driver)
     actions.move_to_element(clicar_cnpj_prestador).click().perform()
@@ -150,11 +150,15 @@ def finishInscricao(driver, dados ):
     
     fecharCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idPesquisar"]')
     fecharCnae.click()
-    time.sleep(1)
+    time.sleep(3)
+
+    textDescricao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]/span').text
 
     clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
     clicar_opçaoCnae.click()
     time.sleep(2)
+
+    return textDescricao
 
 def escrituracaoFinalStretch(driver, dados):
     clickUF = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherEstadoLocalPrestacao"]')

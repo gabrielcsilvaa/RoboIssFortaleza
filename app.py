@@ -36,7 +36,8 @@ try:
     dados = click_inscricao(driver, caminho_planilha, cnpj)
     escriturarData(driver, ano , mes )
     escriturando1(driver)
-    finishInscricao(driver, dados)
+    descricao = finishInscricao(driver, dados)
+    print(descricao)
     escrituracaoFinalStretch(driver, dados)
 
 
