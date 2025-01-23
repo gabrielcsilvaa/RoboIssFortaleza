@@ -114,14 +114,14 @@ def finishInscricao(driver, dados ):
             dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
             dataDoc.clear()
             dataDoc.send_keys(row['DATA DOCUMENTO'])
-            time.sleep(2)
+            time.sleep(1)
 
     clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
     clicar_situacao.click()
-    time.sleep(2)
+    time.sleep(1)
     for i in range(1):
         clicar_situacao.send_keys(Keys.ARROW_DOWN)
-        time.sleep(2)
+        time.sleep(1)
     clicar_situacao.send_keys(Keys.ENTER)
     time.sleep(2)
 
@@ -136,8 +136,45 @@ def finishInscricao(driver, dados ):
     
     fecharCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idPesquisar"]')
     fecharCnae.click()
-    time.sleep(1000)
+    time.sleep(1)
 
     clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
     clicar_opçaoCnae.click()
+    time.sleep(2)
+
+def escrituracaoFinalStretch(driver, dados):
+    clickUF = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherEstadoLocalPrestacao"]')
+    clickUF.click()
+    time.sleep(1)
+    for i, row in dados.iterrows():             
+        clickUF.send_keys(row['UF'])
+        time.sleep(2)
+        clickUF.send_keys(Keys.ENTER)
+        time.sleep(2)
+
+
+    clickCity= driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherCidadeLocalPrestacao"]')
+    clickCity.click()
+    time.sleep(1)
+    for i, row in dados.iterrows():             
+        clickCity.send_keys(row['CIDADE'])
+        time.sleep(2)
+        clickCity.send_keys(Keys.ENTER)
+        time.sleep(2)
+
+    clickOperacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherLocalPrestacao"]')
+    clickOperacao.click()
+    for i in range(1):
+        clickOperacao.send_keys(Keys.ARROW_DOWN)
+        time.sleep(1)
+        clickOperacao.send_keys(Keys.ENTER)
+        time.sleep(2)
+
+    clickIssRetido = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:divIssRetidoSub"]/input')
+    clickIssRetido.click()
+    time.sleep(2)
+
+    valorServico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idValorServicoPrestado"]')
+    valorServico.click()
+    driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idValorServicoPrestado"]').send_keys(row['VALOR DO SERVIÇO'])
     time.sleep(10000)
