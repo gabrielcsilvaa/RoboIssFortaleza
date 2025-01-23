@@ -1,12 +1,20 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from datetime import datetime
+import pandas as pd  
+import time
 import os 
 
 from get_year_month import get_previos_month_and_year
 from login import authUser
 from inscricao import click_inscricao
-from post_data import escriturarData, escriturando1,finishInscricao, escrituracaoFinalStretch
+from post_data import escriturarData, escriturando1,finishInscricao
 
 cnpj = input('Digite o CNPJ da empresa: ')
 
@@ -30,6 +38,7 @@ ano = str(mesANO[1])
 
 
 driver = configurar_driver()
+#aqio
 try:
     authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
 
@@ -37,16 +46,9 @@ try:
     escriturarData(driver, ano , mes )
     escriturando1(driver)
     finishInscricao(driver, dados)
-    escrituracaoFinalStretch(driver, dados)
+    
 
 
-
-
-       
-
-
-
-     
 
 
 except Exception as e:
