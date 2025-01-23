@@ -4,6 +4,20 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from selenium.webdriver.common.action_chains import ActionChains
 
+
+def formatValue(valor):
+    if isinstance(valor, (int, float)):
+        return f"{valor:.2f}".replace('.', ',')
+    elif isinstance(valor, str):
+        if ',' in valor:
+            partes = valor.split(',')
+            if len(partes[1]) == 1:
+                return f"{partes[0]},{partes[1]}0"
+            return valor
+        else:
+            return f"{valor},00"
+    return valor
+
 def escriturarData(driver,ano, mes ): 
 
     clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
@@ -166,7 +180,7 @@ def escrituracaoFinalStretch(driver, dados):
     clickOperacao.click()
     for i in range(1):
         clickOperacao.send_keys(Keys.ARROW_DOWN)
-        time.sleep(1)
+        time.sleep(3)
         clickOperacao.send_keys(Keys.ENTER)
         time.sleep(2)
 
@@ -174,7 +188,14 @@ def escrituracaoFinalStretch(driver, dados):
     clickIssRetido.click()
     time.sleep(2)
 
+    valor_servico = row['VALOR DO SERVIÇO']
+    valor_formatado = formatValue(valor_servico)
+
     valorServico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idValorServicoPrestado"]')
     valorServico.click()
-    driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idValorServicoPrestado"]').send_keys(row['VALOR DO SERVIÇO'])
-    time.sleep(10000)
+    valorServico.send_keys(valor_formatado)
+    time.sleep(3)
+
+    # clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
+    # clickEscrituracao.click()
+    time.sleep(1000)
