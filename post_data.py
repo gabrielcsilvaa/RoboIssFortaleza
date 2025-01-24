@@ -151,7 +151,7 @@ def finishInscricao(driver, dados):
     
     fecharCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idPesquisar"]')
     fecharCnae.click()
-    time.sleep(3)
+    time.sleep(2)
 
     textDescricao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]/span').text
 
@@ -188,7 +188,7 @@ def escrituracaoFinalStretch(driver, dados):
     clickOperacao.click()
     for i in range(1):
         clickOperacao.send_keys(Keys.ARROW_DOWN)
-        time.sleep(3)
+        time.sleep(2)
         clickOperacao.send_keys(Keys.ENTER)
         time.sleep(2)
 
@@ -208,7 +208,7 @@ def escrituracaoFinalStretch(driver, dados):
     clickEscrituracao.click()
     time.sleep(5)
     try: 
-        tbody_element = WebDriverWait(driver, 3).until(
+        tbody_element = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
         )
         if tbody_element:

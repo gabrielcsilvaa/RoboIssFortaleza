@@ -34,8 +34,6 @@ try:
     authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
 
     dados = click_inscricao(driver, caminho_planilha, cnpj)
-
-    
     escriturarData(driver, ano , mes )
     escriturando1(driver)
     descricao = finishInscricao(driver, dados)
