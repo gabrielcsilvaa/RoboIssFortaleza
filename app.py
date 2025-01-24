@@ -37,7 +37,6 @@ try:
     escriturarData(driver, ano , mes )
     escriturando1(driver)
     descricao = finishInscricao(driver, dados)
-    print(descricao)
     escrituracaoFinalStretch(driver, dados)
 
 
