@@ -3,7 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from selenium.webdriver.common.action_chains import ActionChains
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as present_of_element_located
+from selenium.common.exceptions import TimeoutException
 
 def formatValue(valor):
     if isinstance(valor, (int, float)):
@@ -132,10 +135,8 @@ def finishInscricao(driver, dados):
 
     clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
     clicar_situacao.click()
-    time.sleep(1)
     for i in range(1):
         clicar_situacao.send_keys(Keys.ARROW_DOWN)
-        time.sleep(1)
     clicar_situacao.send_keys(Keys.ENTER)
     time.sleep(2)
 
@@ -203,6 +204,22 @@ def escrituracaoFinalStretch(driver, dados):
     valorServico.send_keys(valor_formatado)
     time.sleep(3)
 
-    # clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
-    # clickEscrituracao.click()
+    clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
+    clickEscrituracao.click()
+    time.sleep(5)
+    try: 
+        tbody_element = WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
+        )
+        if tbody_element:
+            recuse_button = WebDriverWait(driver,5).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+            )
+            recuse_button.click()
+            print('recusado com sucesso')
+    except TimeoutException:
+        print("O tbody de re-escriturar nao apareceu.")
+    time.sleep(2)
+    voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
+    voltarISS.click()
     time.sleep(1000)
