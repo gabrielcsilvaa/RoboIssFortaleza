@@ -12,7 +12,7 @@ cnpj = input('Digite o CNPJ da empresa: ')
 
 nome_planilha = 'planilha_robo_iss.xlsx'
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-print(f"Caminho da área de trabalho: {desktop_path}")
+print(f"Caminho da planilha robo_iss: {desktop_path}")
 
 caminho_planilha = os.path.join(desktop_path, nome_planilha)
 def configurar_driver():
@@ -50,7 +50,7 @@ try:
 
 
 except Exception as e:
-    print(f"Erro ao acessar o site: {e}")
+    print(f"Erro ao acessar o site tente novamente: {e}")
 
 
 

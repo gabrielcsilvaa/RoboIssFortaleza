@@ -13,7 +13,6 @@ def authUser(driver, url):
             EC.element_to_be_clickable((By.XPATH, '//*[@id="login"]/div[1]/div/a[1]'))
         )
         click_botao_login.click()
-        print("Cliquei em 'fazer login'")
 
         inserir_cpf = wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="username"]')))
         inserir_cpf.send_keys("389.256.643-72")
@@ -29,4 +28,4 @@ def authUser(driver, url):
         time.sleep(5)
 
     except Exception as e:
-        print(f'Deu erro no login, segue o erro: {e}')    
+        print(f'Deu erro no login, segue o erro e tente novamente: {e}')    

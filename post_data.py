@@ -203,6 +203,6 @@ def escrituracaoFinalStretch(driver, dados):
     valorServico.send_keys(valor_formatado)
     time.sleep(3)
 
-    clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
-    clickEscrituracao.click()
+    # clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
+    # clickEscrituracao.click()
     time.sleep(1000)
