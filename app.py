@@ -34,10 +34,16 @@ try:
     authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
 
     dados = click_inscricao(driver, caminho_planilha, cnpj)
-    escriturarData(driver, ano , mes )
-    escriturando1(driver)
-    descricao = finishInscricao(driver, dados)
-    escrituracaoFinalStretch(driver, dados)
+    
+    for index, row in dados.iterrows():
+        print(row['CNPJ'])
+        print(row['CNPJ'])
+        print(row['CNPJ'])
+        print(row['CNPJ'])
+        escriturarData(driver, ano , mes )
+        escriturando1(driver)
+        descricao = finishInscricao(driver, dados, row)
+        escrituracaoFinalStretch(driver, row)
 
 
 
