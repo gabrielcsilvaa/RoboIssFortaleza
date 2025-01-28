@@ -82,7 +82,7 @@ def escriturarData(driver,ano, mes ):
         print(f'Erro na função escriturarData: {e}')
 
 def escriturando1(driver):
-     
+
     try:
         clicar_tomados = driver.find_element(By.XPATH, '//*[@id="aba_tomados_lbl"]')
         clicar_tomados.click()
@@ -124,33 +124,35 @@ def finishInscricao(driver, dados, row):
             clicar_select.send_keys(Keys.ENTER)
             time.sleep(2)
 
+#erro atual 
         clicar_numero = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]')
         clicar_numero.click()
-        driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]').send_keys(row['Nº DOCUMENTO'])
+        driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]').send_keys(row['N-DOCUMENTO'])
         time.sleep(1)
 
         clicar_serie = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:serieDocumentoDigitado"]')
         clicar_serie.send_keys('E')
 
         dados['DATA DOCUMENTO'] = pd.to_datetime(dados['DATA DOCUMENTO'], errors='coerce').dt.strftime('%d/%m/%Y')
-        if dados['DATA DOCUMENTO'].isnull().any():
-            print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
-        else:
-            dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
-            dataDoc.clear()
-            dataDoc.send_keys(row['DATA DOCUMENTO'])
-            time.sleep(1)
+        # if dados['DATA DOCUMENTO'].isnull().any():
+        #     print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
+        # else:
+        #     dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
+        #     dataDoc.clear()
+        #     dataDoc.send_keys(row['DATA DOCUMENTO'])
+        #     time.sleep(1)
 
         clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
         clicar_situacao.click()
         for i in range(1):
             clicar_situacao.send_keys(Keys.ARROW_DOWN)
         clicar_situacao.send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(10)
 
-        clicar_pesquisarCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idLinkPesquisarCnae"]')
-        clicar_pesquisarCnae.click()
+        clicar_pesquisaCnae = driver.find_element(By.XPATH,'//*[@id="digitarDocumentoForm:idLinkPesquisarCnae"]')
+        clicar_pesquisaCnae.click()
         time.sleep(2)
+        
 
         codigoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idCnaePesquisa"]')
         codigoCnae.click()
@@ -169,6 +171,12 @@ def finishInscricao(driver, dados, row):
         clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
         clicar_opçaoCnae.click()
         time.sleep(2)
+
+
+        clicar_dataEmissao = driver.find.element(By.XPATH , '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
+        clicar_dataEmissao.click()
+        driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]').send_keys(row['DATA DOCUMENTO'])
+        time.sleep(5)
 
         return textDescricao
     except Exception as e:
