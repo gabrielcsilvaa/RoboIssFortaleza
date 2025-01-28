@@ -207,9 +207,12 @@ def escrituracaoFinalStretch(driver, row):
         valorServico.send_keys(valor_formatado)
         time.sleep(3)
 
+        print("Finalizando escrituração...")
         clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
         clickEscrituracao.click()
         time.sleep(5)
+        
+       
         try: 
             tbody_element = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
@@ -219,9 +222,9 @@ def escrituracaoFinalStretch(driver, row):
                     EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
                 )
                 recuse_button.click()
-                print('recusado com sucesso')
+                print('Operação recusada com sucesso.')
         except TimeoutException:
-            print("O tbody de re-escriturar nao apareceu.")
+            print("Confirmação de reescrituração não apareceu.")
         time.sleep(2)
         voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
         voltarISS.click()
