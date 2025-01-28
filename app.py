@@ -42,7 +42,18 @@ driver = configurar_driver()
 try:
     authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
 
+
     dados = click_inscricao(driver, caminho_planilha, cnpj)
+    
+    userCnpj = dados['CNPJ']
+    numDoc = dados['N-DOCUMENTO']
+    dataDoc = dados['DATA DOCUMENTO']
+    codCnae = dados['CODIGO CNAE']
+    serie = dados['SERIE']
+    uf = dados['UF']
+    cidade = dados['CIDADE']
+    serviceValue = dados['VALOR DO SERVIÇO']
+
     escriturarData(driver, ano , mes )
     escriturando1(driver)
     finishInscricao(driver, dados)
