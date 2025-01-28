@@ -35,8 +35,8 @@ try:
 
     dados = click_inscricao(driver, caminho_planilha, cnpj)
     
-    print('Passando para o proximo Cnpj')
     for index, row in dados.iterrows():
+        print(f'Processando {index +1 } de {len(dados)} escriturações de notas')
         escriturarData(driver, ano , mes )
         escriturando1(driver)
         descricao = finishInscricao(driver, dados, row)
