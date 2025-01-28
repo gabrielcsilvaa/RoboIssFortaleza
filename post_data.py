@@ -225,6 +225,6 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
         voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
         voltarISS.click()
-        time.sleep(10)
+        time.sleep(6)
     except Exception as e:
         print(f'Erro na função escrituracaoFinalStretch reinicie a aplicaçao {e}')
