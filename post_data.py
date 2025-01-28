@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support import expected_conditions as present_of_element_located
 from selenium.common.exceptions import TimeoutException
@@ -23,7 +23,7 @@ def formatValue(valor):
         return valor
     
     except Exception as e:
-        print(f'Erro na função FormatValue: {e}')
+        print(f'Erro na função FormatValue reinicie a aplicaçao: {e}')
 
 def escriturarData(driver,ano, mes ): 
     try:
@@ -79,7 +79,7 @@ def escriturarData(driver,ano, mes ):
         clicar_escriturar.click()
         time.sleep(10)
     except Exception as e:
-        print(f'Erro na função escriturarData: {e}')
+        print(f'Erro na função escriturarData reinicie a aplicaçao: {e}')
 
 def escriturando1(driver):
      
@@ -92,9 +92,10 @@ def escriturando1(driver):
         clicar_digitardoc.click()
         time.sleep(2)
     except Exception as e:
-        print(f'Erro na função escriturando 1: {e}')
+        print(f'Erro na função escriturando1 reinicie a aplicaçao: {e}')
 
 def finishInscricao(driver, dados, row):
+
     try:
         
         clicar_cnpj_prestador = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoPesquisaTomadorRb"]/tbody/tr/td[2]/label')
@@ -113,17 +114,13 @@ def finishInscricao(driver, dados, row):
         
         clicar_servico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:abaServico_lbl"]')
         clicar_servico.click()
-        time.sleep(2)
+        time.sleep(5)
 
         clicar_select = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoDocumentoDigitado"]')
-        clicar_select.click()
-        time.sleep(2)
-        for i in range(1):
-            clicar_select.send_keys(Keys.ARROW_DOWN)
-            time.sleep(2)
-            clicar_select.send_keys(Keys.ENTER)
-            time.sleep(2)
-
+        select = Select(clicar_select)
+        select.select_by_value('1129')
+        time.sleep(3)
+        
         clicar_numero = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]')
         clicar_numero.click()
         driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]').send_keys(row['Nº DOCUMENTO'])
@@ -131,21 +128,18 @@ def finishInscricao(driver, dados, row):
 
         clicar_serie = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:serieDocumentoDigitado"]')
         clicar_serie.send_keys('E')
-
-        dados['DATA DOCUMENTO'] = pd.to_datetime(dados['DATA DOCUMENTO'], errors='coerce').dt.strftime('%d/%m/%Y')
-        if dados['DATA DOCUMENTO'].isnull().any():
-            print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
-        else:
-            dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
-            dataDoc.clear()
-            dataDoc.send_keys(row['DATA DOCUMENTO'])
-            time.sleep(1)
+        time.sleep(1)
+        
+        data = row['DATA DOCUMENTO'].strftime('%d/%m/%Y')  
+        dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
+        dataDoc.clear()
+        dataDoc.send_keys(data)
+        time.sleep(1)
 
         clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
-        clicar_situacao.click()
-        for i in range(1):
-            clicar_situacao.send_keys(Keys.ARROW_DOWN)
-        clicar_situacao.send_keys(Keys.ENTER)
+        select = Select(clicar_situacao)
+        select.select_by_index(1)
+
         time.sleep(2)
 
         clicar_pesquisarCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idLinkPesquisarCnae"]')
@@ -172,7 +166,9 @@ def finishInscricao(driver, dados, row):
 
         return textDescricao
     except Exception as e:
-        print(f'Erro na função FinishInscriçao: {e}')
+        print(f'Erro na função FinishInscriçao reinicie a aplicaçao: {e}')
+
+
 def escrituracaoFinalStretch(driver, row):
     try:
         clickUF = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherEstadoLocalPrestacao"]')
@@ -195,12 +191,9 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
 
         clickOperacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherLocalPrestacao"]')
-        clickOperacao.click()
-        for i in range(1):
-            clickOperacao.send_keys(Keys.ARROW_DOWN)
-            time.sleep(2)
-            clickOperacao.send_keys(Keys.ENTER)
-            time.sleep(2)
+        select = Select(clickOperacao)
+        select.select_by_value('475')
+        time.sleep(3) 
 
         clickIssRetido = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:divIssRetidoSub"]/input')
         clickIssRetido.click()
@@ -232,6 +225,6 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
         voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
         voltarISS.click()
-        time.sleep(1000)
+        time.sleep(10)
     except Exception as e:
-        print(f'Erro na função escrituracaoFinalStretch {e}')
+        print(f'Erro na função escrituracaoFinalStretch reinicie a aplicaçao {e}')
