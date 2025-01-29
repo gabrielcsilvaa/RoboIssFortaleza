@@ -2,7 +2,6 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import os 
-
 from get_year_month import get_previos_month_and_year
 from login import authUser
 from inscricao import click_inscricao
@@ -11,10 +10,8 @@ from post_data import escriturarData, escriturando1,finishInscricao, escrituraca
 cnpj = input('Digite o CNPJ da empresa: ')
 
 nome_planilha = 'planilha_robo_iss.xlsx'
-desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-print(f"Caminho da planilha robo_iss: {desktop_path}")
+caminho_planilha = './planilha_robo_iss.xlsx'
 
-caminho_planilha = os.path.join(desktop_path, nome_planilha)
 def configurar_driver():
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")  
