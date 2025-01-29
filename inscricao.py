@@ -24,6 +24,6 @@ def click_inscricao(driver, caminho_planilha,cnpj):
 
     clicar_empresa = driver.find_element(By.XPATH, '//*[@id="alteraInscricaoForm:empresaDataTable:0:linkInscricao"]')
     clicar_empresa.click()
-    time.sleep(2)
+    time.sleep(5)
 
     return dados

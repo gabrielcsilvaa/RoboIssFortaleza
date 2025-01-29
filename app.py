@@ -34,14 +34,19 @@ try:
     authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
 
     dados = click_inscricao(driver, caminho_planilha, cnpj)
-    
+    continuacao = 'inicio'
     for index, row in dados.iterrows():
+        
         print(f'Processando {index +1 } de {len(dados)} escriturações de notas')
-        escriturarData(driver, ano , mes )
-        escriturando1(driver)
-        descricao = finishInscricao(driver, dados, row)
-        escrituracaoFinalStretch(driver, row)
 
+        if continuacao == 'inicio':
+            escriturarData(driver, ano , mes )
+            escriturando1(driver)
+        
+        descricao = finishInscricao(driver, dados, row)
+        continuacao = escrituracaoFinalStretch(driver, row)
+
+    print('Escriturações Finalizadas!')
 
 
 

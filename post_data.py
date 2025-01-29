@@ -210,24 +210,39 @@ def escrituracaoFinalStretch(driver, row):
         print("Finalizando escrituração...")
         clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
         clickEscrituracao.click()
-        time.sleep(5)
+        time.sleep(2)
         
        
         try: 
-            tbody_element = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
+            WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
             )
-            if tbody_element:
-                recuse_button = WebDriverWait(driver,5).until(
-                    EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
-                )
-                recuse_button.click()
-                print('Operação recusada com sucesso.')
+            
+            recuse_button = WebDriverWait(driver,5).until(
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+            )
+            recuse_button.click()
+            print('Operação recusada com sucesso.')
+
+            time.sleep(2)
+
+            voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
+            voltarISS.click()
+            time.sleep(6)
+
+            return 'inicio'
+            
+            
+            
         except TimeoutException:
-            print("Confirmação de reescrituração não apareceu.")
-        time.sleep(2)
-        voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
-        voltarISS.click()
-        time.sleep(6)
+            clickNewDocument = driver.find_element(By.XPATH, '//*[@id="j_id163:novo"]')
+            clickNewDocument.click()
+
+            print("Nota escriturada com sucesso")
+            return 'continua'
+            
+
+        
+
     except Exception as e:
         print(f'Erro na função escrituracaoFinalStretch reinicie a aplicaçao {e}')
