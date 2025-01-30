@@ -133,14 +133,16 @@ def finishInscricao(driver, dados, row):
         clicar_serie = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:serieDocumentoDigitado"]')
         clicar_serie.send_keys('E')
 
-        dados['DATA DOCUMENTO'] = pd.to_datetime(dados['DATA DOCUMENTO'], errors='coerce').dt.strftime('%d/%m/%Y')
-        # if dados['DATA DOCUMENTO'].isnull().any():
-        #     print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
-        # else:
-        #     dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
-        #     dataDoc.clear()
-        #     dataDoc.send_keys(row['DATA DOCUMENTO'])
-        #     time.sleep(1)
+        dados['DATA DOCUMENTO'] = pd.to_datetime(dados['DATA DOCUMENTO'], errors='coerce').strftime('%d/%m/%Y')
+        if dados['DATA DOCUMENTO'].isnull().any():
+            print("Há valores inválidos na coluna 'DATA DOCUMENTO'. Por favor, revise a planilha.")
+        else:
+            dataDoc = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]')
+            dataDoc.clear()
+            dataDoc.send_keys(row['DATA DOCUMENTO'])
+            time.sleep(1)
+
+        
 
         clicar_situacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:statusNfse"]')
         clicar_situacao.click()
@@ -177,6 +179,7 @@ def finishInscricao(driver, dados, row):
         clicar_dataEmissao.click()
         driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:dataEmissaoInputDate"]').send_keys(row['DATA DOCUMENTO'])
         time.sleep(5)
+
 
         return textDescricao
     except Exception as e:
