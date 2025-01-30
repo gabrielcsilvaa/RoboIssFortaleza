@@ -214,31 +214,34 @@ def escrituracaoFinalStretch(driver, row):
         
        
         try: 
-            WebDriverWait(driver, 5).until(
+            tbody = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
             )
-            
-            recuse_button = WebDriverWait(driver,5).until(
-            EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
-            )
-            recuse_button.click()
-            print('Operação recusada com sucesso.')
+            if tbody:
+                recuse_button = WebDriverWait(driver,5).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+                )
+                recuse_button.click()
+                print('Operação recusada com sucesso.')
 
-            time.sleep(2)
+                time.sleep(2)
 
-            voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
-            voltarISS.click()
-            time.sleep(6)
+                voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
+                voltarISS.click()
+                time.sleep(7)
 
-            return 'inicio'
+                return 'inicio'
+            else:
+                raise Exception('TBODY NAO ENCONTRADO!')
             
             
-            
-        except TimeoutException:
+        except:
             clickNewDocument = driver.find_element(By.XPATH, '//*[@id="j_id163:novo"]')
             clickNewDocument.click()
 
             print("Nota escriturada com sucesso")
+
+            time.sleep(7)
             return 'continua'
             
 
