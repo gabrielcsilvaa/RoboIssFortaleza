@@ -114,12 +114,21 @@ def finishInscricao(driver, dados, row):
         
         clicar_servico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:abaServico_lbl"]')
         clicar_servico.click()
-        time.sleep(5)
-
+        time.sleep(2)
+        
         clicar_select = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:tipoDocumentoDigitado"]')
-        select = Select(clicar_select)
-        select.select_by_value('1129')
-        time.sleep(3)
+
+        opcoes = clicar_select.find_elements(By.TAG_NAME, "option")
+
+        for opcao in opcoes:
+            texto = opcao.text
+            print(f"Opção encontrada: {texto}")  
+
+            if texto.strip() == "NFS-e de Outro Município":
+                opcao.click()
+                print('✅ Clicou na opção "NFS-e de Outro Município"')
+        time.sleep(2)
+                
         
         clicar_numero = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:numeroDocumentoDigitado"]')
         clicar_numero.click()
@@ -140,7 +149,7 @@ def finishInscricao(driver, dados, row):
         select = Select(clicar_situacao)
         select.select_by_index(1)
 
-        time.sleep(2)
+        time.sleep(1)
 
         clicar_pesquisarCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idLinkPesquisarCnae"]')
         clicar_pesquisarCnae.click()
