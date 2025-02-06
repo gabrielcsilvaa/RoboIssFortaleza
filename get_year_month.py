@@ -10,5 +10,3 @@ def get_previos_month_and_year():
         previous_month = testando.month - 1
         year = testando.year
     return previous_month,year
-
-

@@ -200,9 +200,16 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
 
         clickOperacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherLocalPrestacao"]')
-        select = Select(clickOperacao)
-        select.select_by_value('475')
-        time.sleep(3) 
+
+        options = clickOperacao.find_elements(By.TAG_NAME, "option")
+        for opcao in options:
+            texto = opcao.text
+            print(f"Opção encontrada: {texto}")  
+
+            if texto.strip() == "Tributação Fora do Município":
+                opcao.click()
+                print('✅ Clicou na opção "Tributação Fora do Município"')
+        time.sleep(2)
 
         clickIssRetido = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:divIssRetidoSub"]/input')
         clickIssRetido.click()
@@ -216,12 +223,42 @@ def escrituracaoFinalStretch(driver, row):
         valorServico.send_keys(valor_formatado)
         time.sleep(3)
 
-        print("Finalizando escrituração...")
         clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
         clickEscrituracao.click()
+        print("Finalizando escrituração...")
         time.sleep(2)
-        
-       
+      
+        try:
+            erro_encontrado = False
+
+            for i in range (1, 6):
+                try:
+                    xpath_mensagem = f'//*[@id="mensagens"]/dt[{i}]'
+                    print(f"Tentando localizar mensagem de erro no XPath: {xpath_mensagem}")
+
+                    mensagem_erro = WebDriverWait(driver, 2).until(
+                    EC.presence_of_element_located((By.XPATH, xpath_mensagem))
+                    )     
+                    texto_erro = mensagem_erro.text
+                    print(f"🛑 Mensagem encontrada: {texto_erro}") 
+
+                    voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
+                    voltarISS.click()
+                    time.sleep(2)
+
+                    erro_encontrado = True
+                    break
+                
+                except:
+                    print("nenhuma mensagem de erro encontrada ")
+
+            if erro_encontrado:
+                return 'inicio'
+
+        except Exception as e:
+             print(f"⚠ Erro ao verificar mensagens: {e}")
+             print("🔄 Continuando o processo normalmente...")
+
         try: 
             tbody = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
