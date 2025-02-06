@@ -13,7 +13,6 @@ ano = str(ano)
 mes = int(mes)
 
 
-nome_planilha = 'planilha_robo_iss.xlsx'
 caminho_planilha = './planilha_robo_iss.xlsx'
 
 def configurar_driver():
