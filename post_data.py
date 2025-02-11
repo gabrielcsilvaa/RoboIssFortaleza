@@ -228,70 +228,74 @@ def escrituracaoFinalStretch(driver, row):
         print("Finalizando escrituração...")
         time.sleep(2)
       
+
+
         try:
-            erro_encontrado = False
-
-            for i in range (1, 6):
-                try:
-                    xpath_mensagem = f'//*[@id="mensagens"]/dt[{i}]'
-                    print(f"Tentando localizar mensagem de erro no XPath: {xpath_mensagem}")
-
-                    mensagem_erro = WebDriverWait(driver, 2).until(
-                    EC.presence_of_element_located((By.XPATH, xpath_mensagem))
-                    )     
-                    texto_erro = mensagem_erro.text
-                    print(f"🛑 Mensagem encontrada: {texto_erro}") 
-
-                    voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
-                    voltarISS.click()
-                    time.sleep(2)
-
-                    erro_encontrado = True
-                    break
-                
-                except:
-                    print("nenhuma mensagem de erro encontrada ")
-
-            if erro_encontrado:
-                return 'inicio'
-
-        except Exception as e:
-             print(f"⚠ Erro ao verificar mensagens: {e}")
-             print("🔄 Continuando o processo normalmente...")
-
-        try: 
-            tbody = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
+            tbody = WebDriverWait(driver, 2).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
             )
             if tbody:
-                recuse_button = WebDriverWait(driver,5).until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+                recuse_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
                 )
                 recuse_button.click()
                 print('Operação recusada com sucesso.')
 
                 time.sleep(2)
 
-                voltarISS = driver.find_element(By.XPATH,'//*[@id="j_id7"]/img')
+                voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
                 voltarISS.click()
                 time.sleep(7)
 
                 return 'inicio'
-            else:
-                raise Exception('TBODY NAO ENCONTRADO!')
-            
-            
         except:
+            print("❌ Tbody não encontrado. Prosseguindo para verificação de mensagens de erro.")
+
+        try:
+            erro_encontrado = False
+
+            for i in range(1, 6):
+                try:
+                    xpath_mensagem = f'//*[@id="mensagens"]/dt[{i}]'
+                    print(f"Tentando localizar mensagem de erro no XPath: {xpath_mensagem}")
+
+                    mensagem_erro = WebDriverWait(driver, 2).until(
+                        EC.presence_of_element_located((By.XPATH, xpath_mensagem))
+                    )     
+                    texto_erro = mensagem_erro.text
+                    print(f"🛑 Mensagem encontrada: {texto_erro}") 
+
+                    if "já foi escriturado" in texto_erro.lower():
+                        print("🔄 Nota já escriturada. Continuando o processo normalmente...")
+                        erro_encontrado = False
+                    else:
+                        voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
+                        voltarISS.click()
+                        time.sleep(2)
+                        erro_encontrado = True
+                        break
+
+                except:
+                    print("Nenhuma mensagem de erro encontrada.")
+
+            if erro_encontrado:
+                return 'inicio'
+
+        except Exception as e:
+            print(f"⚠ Erro ao verificar mensagens: {e}")
+            print("🔄 Continuando o processo normalmente...")
+
+        try:
             clickNewDocument = driver.find_element(By.XPATH, '//*[@id="j_id163:novo"]')
             clickNewDocument.click()
-
-            print("Nota escriturada com sucesso")
+            print("✅ Nota escriturada com sucesso")
 
             time.sleep(7)
             return 'continua'
-            
+        except:
+            print("❌ Erro ao tentar clicar no botão de novo documento.")
+            return 'erro'   
 
-        
 
     except Exception as e:
         print(f'Erro na função escrituracaoFinalStretch reinicie a aplicaçao {e}')
