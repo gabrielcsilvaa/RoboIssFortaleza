@@ -254,7 +254,7 @@ def escrituracaoFinalStretch(driver, row):
         try:
             erro_encontrado = False
 
-            for i in range(1, 6):
+            for i in range(1, 7):
                 try:
                     xpath_mensagem = f'//*[@id="mensagens"]/dt[{i}]'
                     print(f"Tentando localizar mensagem de erro no XPath: {xpath_mensagem}")
