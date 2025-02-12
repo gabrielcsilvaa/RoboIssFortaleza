@@ -232,20 +232,35 @@ def escrituracaoFinalStretch(driver, row):
             tbody = WebDriverWait(driver, 2).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
             )
-            if tbody:
-                recuse_button = WebDriverWait(driver, 5).until(
-                    EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+            tbody_text = tbody.text.replace("\n", " ").strip()
+            print(f"Texto encontrado no tbody: {tbody_text}")
+
+            texto_permitido = "Prestador não inscrito no CPOM. O tomador de serviço é obrigado a exigir prova do estabelecimento do prestador em outro município para definir local de incidência do ISS, sob pena de sanção pecuniária (Art. 236-A, do CTM)."
+
+            if texto_permitido in tbody_text:
+                print("✅ Texto permitido encontrado. Aceitando operação...")
+                accept_button = WebDriverWait(driver, 3).until(
+                    EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id487"]'))
                 )
-                recuse_button.click()
-                print('Operação recusada com sucesso.')
+                time.sleep(3)
+                driver.execute_script("arguments[0].click();", accept_button)
+            
+            else:
+             print("❌ Texto não permitido. Recusando operação...")
+             recuse_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id491"]'))
+            )
+            driver.execute_script("arguments[0].click();", recuse_button)
+            print('Operação recusada com sucesso.')
 
-                time.sleep(2)
+            time.sleep(2)
 
-                voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
-                voltarISS.click()
-                time.sleep(7)
+            voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
+            voltarISS.click()
+            time.sleep(7)
 
-                return 'inicio'
+            return 'inicio'
+        
         except:
             print("❌ Tbody não encontrado. Prosseguindo para verificação de mensagens de erro.")
 
