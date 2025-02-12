@@ -227,8 +227,6 @@ def escrituracaoFinalStretch(driver, row):
         clickEscrituracao.click()
         print("Finalizando escrituração...")
         time.sleep(2)
-      
-
 
         try:
             tbody = WebDriverWait(driver, 2).until(
