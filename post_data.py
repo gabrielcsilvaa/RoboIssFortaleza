@@ -77,7 +77,7 @@ def escriturarData(driver,ano, mes ):
 
         clicar_escriturar = driver.find_element(By.XPATH, '//*[@id="manterEscrituracaoForm:dataTable:0:escriturar"]')
         clicar_escriturar.click()
-        time.sleep(10)
+        time.sleep(7)
     except Exception as e:
         print(f'Erro na função escriturarData reinicie a aplicaçao: {e}')
 
@@ -187,7 +187,7 @@ def escrituracaoFinalStretch(driver, row):
         clickUF.send_keys(row['UF'])
         time.sleep(2)
         clickUF.send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(1)
 
 
         clickCity= driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherCidadeLocalPrestacao"]')
@@ -209,7 +209,7 @@ def escrituracaoFinalStretch(driver, row):
             if texto.strip() == "Tributação Fora do Município":
                 opcao.click()
                 print('✅ Clicou na opção "Tributação Fora do Município"')
-        time.sleep(2)
+        time.sleep(1)
 
         clickIssRetido = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:divIssRetidoSub"]/input')
         clickIssRetido.click()
