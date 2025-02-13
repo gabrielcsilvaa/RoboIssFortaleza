@@ -244,6 +244,7 @@ def escrituracaoFinalStretch(driver, row):
                 )
                 time.sleep(3)
                 driver.execute_script("arguments[0].click();", accept_button)
+                print("operaçao aceita com sucesso")
             
             else:
              print("❌ Texto não permitido. Recusando operação...")
