@@ -245,6 +245,15 @@ def escrituracaoFinalStretch(driver, row):
                 time.sleep(3)
                 driver.execute_script("arguments[0].click();", accept_button)
                 print("operaçao aceita com sucesso")
+
+                time.sleep(2)
+
+                gravar_documento  = WebDriverWait(driver, 3).until(
+                    EC.element_to_be_clickable((By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]'))
+                )
+                gravar_documento.click()
+                print("✅ Documento gravado com sucesso depois do tbody")
+
             
             else:
              print("❌ Texto não permitido. Recusando operação...")
@@ -254,7 +263,7 @@ def escrituracaoFinalStretch(driver, row):
             driver.execute_script("arguments[0].click();", recuse_button)
             print('Operação recusada com sucesso.')
 
-            time.sleep(2)
+            time.sleep(1)
 
             voltarISS = driver.find_element(By.XPATH, '//*[@id="j_id7"]/img')
             voltarISS.click()
