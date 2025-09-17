@@ -1,51 +1,70 @@
-Robo Escriturador de PDFs
 
-Descrição do Projeto
+# RoboIss
 
-Este é um projeto de automação desenvolvido em Python para realizar a escrituração automática de PDFs no ISS (Sistema de Escrituração). O robô utiliza dados fornecidos em uma planilha, processa essas informações e interage com o sistema do ISS para preencher e gerar os PDFs automaticamente. Este projeto visa aumentar a eficiência e reduzir o tempo gasto em tarefas manuais repetitivas.
 
-Funcionalidades
+📌 **Sobre o Projeto**  
+Este projeto realiza automação de escrituração de notas fiscais relacionadas ao ISS utilizando Python e Selenium, otimizando tarefas e aumentando a produtividade.
 
-- **Leitura de Dados da Planilha**: Extrai informações como nome, valores, datas e outras especificações da planilha fornecida.
-- **Interação Automática com o ISS**: Realiza login no sistema, navega pelas páginas necessárias e preenche os campos automaticamente.
-- **Geração de PDFs**: Completa o processo de escrituração e baixa os PDFs gerados para uma pasta local.
+Um dos passos essenciais para o funcionamento do robô é alimentar corretamente a planilha do projeto com os dados das notas fiscais. Nela, você deve inserir informações como:
+- Código CNAE
+- CNPJ da empresa
+- Número da nota
+- Data de emissão
+- Valor
+- Outros dados obrigatórios conforme o modelo da planilha
 
-## Pré-requisitos
+O robô irá ler esses dados da planilha e realizar automaticamente o processo de escrituração no sistema ISS, preenchendo os campos necessários e gerando os documentos conforme solicitado.
 
-Certifique-se de que os seguintes requisitos estão instalados no seu ambiente:
+---
 
-- **Python 3.8 ou superior**
-- **Google Chrome** instalado e atualizado
-- **Bibliotecas Python**:
-  - `selenium`
-  - `pandas`
-  - `openpyxl`
-  - `webdriver-manager`
+🚀 **Tecnologias Utilizadas**  
+- Python  
+- Selenium  
+- GitHub  
 
-  Instale as dependências com o seguinte comando:
+---
 
-  ```bash
-  pip install selenium pandas openpyxl webdriver-manager
-  ```
-  
-  ## COMANDOS GIT !!
+📖 **Manual de Instalação**
 
-  nao commita antes de acabar seu dia, sempre q fizer algo commita !
-  
-  ```bash
-  git commit -m "Gabriel INICIO - 1"
-  ```
-  Sempre quando começarmos uma nova parte do projeto ou algo que algum esteja fazendo solo criar sua propria branch nesse modelo
-  ```bash
-  git branch Gabriel1-escrituraçao
-  ```
-  Mudar para branch caso queira trocar
-  ```bash
-  git checkout nome-da-branch
-  ```  
-  Assim que abrir o projeto sempre da "git pull"
-  ```bash
-  git pull
-  ```
-  
-  
+### 🛠️ 1. Pré-requisitos  
+Antes de começar, certifique-se de ter os seguintes requisitos instalados:  
+✅ Python 3.10+  
+✅ Git  
+✅ Google Chrome  
+
+### 📥 2. Clonando o Repositório  
+Abra o terminal ou Prompt de Comando e execute:  
+```powershell
+git clone https://github.com/gabrielcsilvaa/RoboIss
+cd RoboIss
+```
+
+### 📦 3. Instalando Dependências  
+Com o Python instalado, execute:  
+```powershell
+pip install -r requirements.txt
+```
+Se quiser usar um ambiente virtual (recomendado):  
+```powershell
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 🚀 4. Executando o Projeto  
+Para iniciar o script de automação, execute:  
+```powershell
+python app.py
+```
+
+### 🛠️ 5. Possíveis Erros e Soluções
+
+| Erro | Solução |
+|------|---------|
+| ModuleNotFoundError: No module named 'X' | Execute `pip install -r requirements.txt` novamente. |
+| chromedriver not found | Baixe o ChromeDriver correspondente à versão do seu Chrome. |
+| Navegador não abre | Atualize o navegador Chrome para a última versão. |
+
+
+
+
