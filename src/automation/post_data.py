@@ -25,13 +25,13 @@ def formatValue(valor):
     except Exception as e:
         print(f'Erro na função FormatValue reinicie a aplicaçao: {e}')
 
-def escriturarData(driver,ano, mes ): 
+def escriturarData(driver,ano, mes): 
     try:
         clicar_escrituracao = driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[6]/a')
         clicar_escrituracao.click()
         time.sleep(2)
 
-        clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id78"]')
+        clicar_escrituracao2 = driver.find_element(By.XPATH, '//*[@id="formMenuTopo:menuEscrituracao:j_id80"]')
         clicar_escrituracao2.click()
         time.sleep(2) 
 
@@ -88,7 +88,7 @@ def escriturando1(driver):
         clicar_tomados.click()
         time.sleep(2)
 
-        clicar_digitardoc = driver.find_element(By.XPATH, '//*[@id="servico_tomado_form:seamj_id836"]')
+        clicar_digitardoc = driver.find_element(By.XPATH, '//*[@id="servico_tomado_form:seamj_id849"]')
         clicar_digitardoc.click()
         time.sleep(2)
     except Exception as e:
@@ -229,7 +229,7 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
 
         try:
-            tbody = WebDriverWait(driver, 2).until(
+            tbody = WebDriverWait(driver, 2).until( 
                 EC.presence_of_element_located((By.XPATH, '//*[@id="digitarDocumentoForm:confirmacao_customizadaContentTable"]/tbody'))
             )
             tbody_text = tbody.text.replace("\n", " ").strip()

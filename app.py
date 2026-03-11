@@ -1,61 +1,62 @@
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from get_year_month import get_previos_month_and_year
-from login import authUser
-from inscricao import click_inscricao
-from post_data import escriturarData, escriturando1,finishInscricao, escrituracaoFinalStretch
+from webdriver_manager.chrome import ChromeDriverManager
 
-cnpj = input('Digite o CNPJ da empresa: ')
-mes = input('informe o mês desejado(exemplo 5):  ')
-ano = input('informe o ano desejado(exemplo 2024): ')
-ano = str(ano)
-mes = int(mes)
+from src.automation.inscricao import click_inscricao
+from src.automation.login import authUser
+from src.automation.post_data import (
+    escrituracaoFinalStretch,
+    escriturando1,
+    escriturarData,
+    finishInscricao,
+)
+from src.config.settings import ISS_LOGIN_URL, PLANILHA_PATH
+from src.utils.date_utils import get_previos_month_and_year
 
-
-caminho_planilha = './planilha_robo_iss.xlsx'
 
 def configurar_driver():
     options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")  
-    
+    options.add_argument("--start-maximized")
+
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
-# mesANO = get_previos_month_and_year()
-# mes = mesANO[0]
-# ano = str(mesANO[1])
+
+def main():
+    cnpj = input("Digite o CNPJ da empresa: ")
+    mes = input("informe o mes desejado(exemplo 5):  ")
+    ano = input("informe o ano desejado(exemplo 2024): ")
+    ano = str(ano)
+    mes = int(mes)
+
+    # mes_ano = get_previos_month_and_year()
+    # mes = mes_ano[0]
+    # ano = str(mes_ano[1])
+
+    driver = configurar_driver()
+    try:
+        authUser(driver, ISS_LOGIN_URL)
+
+        dados = click_inscricao(driver, PLANILHA_PATH, cnpj)
+        continuacao = "inicio"
+        for index, row in dados.iterrows():
+            print(f"Processando {index + 1} de {len(dados)} escrituracoes de notas")
+
+            if continuacao == "inicio":
+                escriturarData(driver, ano, mes)
+                escriturando1(driver)
+
+            finishInscricao(driver, dados, row)
+            continuacao = escrituracaoFinalStretch(driver, row)
+
+        print("Escrituracoes finalizadas!")
+
+    except Exception as e:
+        print(f"Erro ao acessar o site. Tente novamente: {e}")
+    finally:
+        driver.quit()
 
 
-
-driver = configurar_driver()
-try:
-    authUser(driver, 'https://iss.fortaleza.ce.gov.br/grpfor/login.seam?cid=33110')
-
-    dados = click_inscricao(driver, caminho_planilha, cnpj)
-    continuacao = 'inicio'
-    for index, row in dados.iterrows():
-        
-        print(f'Processando {index +1 } de {len(dados)} escriturações de notas')
-
-        if continuacao == 'inicio':
-            escriturarData(driver, ano , mes )
-            escriturando1(driver)
-        
-        descricao = finishInscricao(driver, dados, row)
-        continuacao = escrituracaoFinalStretch(driver, row)
-
-    print('Escriturações Finalizadas!')
-
-
-
-       
-
-
-
-     
-
-
-except Exception as e:
-    print(f"Erro ao acessar o site tente novamente: {e}")
+if __name__ == "__main__":
+    main()

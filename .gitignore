@@ -1,1 +1,17 @@
-login.py
+# Environment and secrets
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+
+settings.py
+
