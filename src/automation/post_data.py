@@ -1,29 +1,10 @@
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-import pandas as pd
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support import expected_conditions as present_of_element_located
-from selenium.common.exceptions import TimeoutException
-
-def formatValue(valor):
-    try:
-        if isinstance(valor, (int, float)):
-            return f"{valor:.2f}".replace('.', ',')
-        elif isinstance(valor, str):
-            if ',' in valor:
-                partes = valor.split(',')
-                if len(partes[1]) == 1:
-                    return f"{partes[0]},{partes[1]}0"
-                return valor
-            else:
-                return f"{valor},00"
-        return valor
-    
-    except Exception as e:
-        print(f'Erro na função FormatValue reinicie a aplicaçao: {e}')
+from src.utils.value_utils import format_value
 
 def escriturarData(driver,ano, mes): 
     try:
@@ -82,7 +63,7 @@ def escriturarData(driver,ano, mes):
         print(f'Erro na função escriturarData reinicie a aplicaçao: {e}')
 
 def escriturando1(driver):
-     
+
     try:
         clicar_tomados = driver.find_element(By.XPATH, '//*[@id="aba_tomados_lbl"]')
         clicar_tomados.click()
@@ -164,12 +145,12 @@ def finishInscricao(driver, dados, row):
         fecharCnae.click()
         time.sleep(2)
 
-        textDescricao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]/span').text
+        textDescricao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id453"]/span').text
 
         descricaoServico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idDescricaoServico"]')
         descricaoServico.send_keys(textDescricao)
 
-        clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id451"]')
+        clicar_opçaoCnae = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idFormularioPesquisaCnae:idDatatableListaCnae:0:j_id453"]')
         clicar_opçaoCnae.click()
         time.sleep(2)
 
@@ -196,7 +177,7 @@ def escrituracaoFinalStretch(driver, row):
                     
         clickCity.send_keys(row['CIDADE'])
         time.sleep(2)
-        clickCity.send_keys(Keys.ENTER)
+        clickCity.send_keys(Keys.ENTER) 
         time.sleep(2)
 
         clickOperacao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:comboEscolherLocalPrestacao"]')
@@ -216,14 +197,14 @@ def escrituracaoFinalStretch(driver, row):
         time.sleep(2)
 
         valor_servico = row['VALOR DO SERVIÇO']
-        valor_formatado = formatValue(valor_servico)
+        valor_formatado = format_value(valor_servico)
 
         valorServico = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:idValorServicoPrestado"]')
         valorServico.click()
         valorServico.send_keys(valor_formatado)
-        time.sleep(3)
+        time.sleep(3)   
 
-        clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id475"]')
+        clickEscrituracao = driver.find_element(By.XPATH, '//*[@id="digitarDocumentoForm:j_id477"]')
         clickEscrituracao.click()
         print("Finalizando escrituração...")
         time.sleep(2)
